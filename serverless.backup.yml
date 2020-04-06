@@ -1,0 +1,89 @@
+service:
+    name: sls-notes-app
+    app: sls-notes
+    org: ncp
+  
+  plugins:
+    - serverless-webpack
+    - serverless-iam-roles-per-function
+    - serverless-plugin-tracing
+  custom:
+    webpack:
+      webpackConfig: ./webpack.config.js
+      includeModules: true
+  
+  # package:
+  #     individually: true
+  
+  provider:
+    name: aws
+    runtime: nodejs12.x
+  
+    stage: ${opt:stage, 'dev'}
+    region: ${top:region, 'eu-west-1'}
+  
+    tracing:
+      lambda: true
+      apiGateway: true
+      iamRoleStatements:
+        - Effect: "Allow"
+          Action:
+            - "xray:PutTraceSegments"
+            - "xray:PutTelemetryRecords"
+          Resource:
+            - "*"
+  
+    apiGateway:
+      minimumCompressionSize: 1024
+    environment:
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+      NOTES_TABLE: SlsNotes-${self:provider.stage}
+      NOTES_UPLOADS_S3_BUCKET: sls-notes-uploads-bucket-${self:provider.stage}
+      SIGNED_URL_EXPIRATION: 300 # seconds = 5 mins
+  
+  resources:
+    Resources:
+      GatewayResponseDefault4XX:
+        Type: AWS::ApiGateway::GatewayResponse
+        Properties:
+          ResponseParameters:
+            gatewayresponse.header.Access-Control-Allow-Origin: "'*''"
+            gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+            gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+          ResponseType: DEFAULT_4XX
+          RestApiId:
+            Ref: ApiGatewayRestApi
+  
+      NotesDynamoDBTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+          AttributeDefinitions:
+            - AttributeName: userId
+              AttributeType: S
+            - AttributeName: entityId
+              AttributeType: S
+          KeySchema:
+            - AttributeName: userId
+              KeyType: HASH
+            - AttibuteName: entityId
+              KeyType: RANGE
+          BillingMode: PAY_PER_REQUEST
+          TableName: ${self:provider.environment.NOTES_TABLE}
+      NotesUploadsBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+          BucketName: ${self:provider.environment.NOTES_UPLOADS_S3_BUCKET}
+          CorsConfiguration:
+            CorsRules:
+              - AllowedOrigins:
+                  - "*"
+                AllowedHeaders:
+                  - "*"
+                AllowedMethods:
+                  - GET
+                  - PUT
+                  - POST
+                  - DELETE
+                  - HEAD
+                MaxAge: 3000
+  
