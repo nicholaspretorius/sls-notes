@@ -39,3 +39,13 @@ API URL: https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev
 * Test will run once: 
 
 `npm test`
+
+### Deployment
+
+* Deploy the entire application: 
+
+`sls deploy -v`
+
+* Deploy a single function: 
+
+`serverless deploy function -f Billing`
