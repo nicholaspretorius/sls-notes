@@ -55,6 +55,14 @@ functions:
           path: notes/{noteId}
           cors: true
           authorizer: aws_iam
+  GetNotes:
+    handler: src/getNotes.handler
+    events:
+      - http:
+          method: get
+          path: notes
+          cors: true
+          authorizer: aws_iam
 
 resources:
   Resources:
