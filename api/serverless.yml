@@ -65,14 +65,28 @@ functions:
     handler: src/getNotes.handler
     events:
       - http:
-        method: get
-        path: notes
-        cors: true
-        authorizer: aws_iam
+          method: get
+          path: notes
+          cors: true
+          authorizer: aws_iam
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
+
+  UpdateNote:
+    handler: src/updateNote.handler
+    events:
+      - http:
+          method: put
+          cors: true
+          authorizer: aws_iam
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
 resources:
