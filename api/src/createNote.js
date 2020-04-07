@@ -27,10 +27,10 @@ export async function handler(event, context) {
 
     logger.info("Note: ", { note: params.Item });
 
-    return success(params.Item);
+    return success(201, params.Item);
   } catch (e) {
     logger.info("Error creating note: ", { error: e });
 
-    return failure(e);
+    return failure(500, e);
   }
 }
