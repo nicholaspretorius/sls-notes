@@ -22,16 +22,16 @@ service:
     stage: ${opt:stage, 'dev'}
     region: ${top:region, 'eu-west-1'}
   
-    tracing:
-      lambda: true
-      apiGateway: true
-      iamRoleStatements:
-        - Effect: "Allow"
-          Action:
-            - "xray:PutTraceSegments"
-            - "xray:PutTelemetryRecords"
-          Resource:
-            - "*"
+        tracing:
+        lambda: true
+        apiGateway: true
+        iamRoleStatements:
+            - Effect: "Allow"
+            Action:
+                - "xray:PutTraceSegments"
+                - "xray:PutTelemetryRecords"
+            Resource:
+                - "*"
   
     apiGateway:
       minimumCompressionSize: 1024
