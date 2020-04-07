@@ -8,8 +8,11 @@ Notes app using Node.js, Serverless framework and AWS. According to the series a
 
 `AWS_PROFILE=serverless-user serverless invoke local --function CreateNote --path src/mocks/createNoteEvent.json`
 
+`AWS_PROFILE=serverless-user serverless invoke local --function GetNote --path src/mocks/getNoteEvent.json`
+
 ### API
 
 API URL: https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev
 
 * POST /notes https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev/notes
+* GET /notes https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev/notes/{noteId}
