@@ -11,42 +11,26 @@ export async function handler(event, context) {
   const userId = event.requestContext.identity.cognitoIdentityId;
   const noteId = event.pathParameters.noteId;
 
-  const note = await getNote(userId, noteId);
-
-  // check for existing note
-  if (!note) {
-    return failure(404, { message: "Note not found" });
-  } else {
-    const params = {
-      TableName: notesTable,
-      Item: {
-        userId,
-        noteId,
-        content: data.content,
-        attachment: data.attachment,
-        createdAt: Date.now()
-      }
-    };
-
-    try {
-      const res = await dynamoDb.call("put", params);
-      logger.info("Note updated: ", { note: params.Item, results: res });
-      return success(200, params.Item);
-    } catch (e) {
-      logger.error("Error updating note: ", { error: e });
-      return failure(500, { error: e });
-    }
-  }
-}
-
-async function getNote(userId, noteId) {
   const params = {
     TableName: notesTable,
     Key: {
       userId,
       noteId
-    }
+    },
+    UpdateExpression: "SET content = :content, attachment = :attachment",
+    ExpressionAttributeValues: {
+      ":content": data.content,
+      ":attachment": data.attachment
+    },
+    ReturnValues: "ALL_NEW"
   };
 
-  return await dynamoDb.call("get", params);
+  try {
+    const results = await dynamoDb.call("update", params);
+    logger.info("Note updated: ", { results });
+    return success(200, results.Attributes);
+  } catch (e) {
+    logger.error("Error updating note: ", { error: e });
+    return failure(500, { error: e });
+  }
 }
