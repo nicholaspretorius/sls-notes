@@ -55,14 +55,25 @@ functions:
           path: notes/{noteId}
           cors: true
           authorizer: aws_iam
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
+
   GetNotes:
     handler: src/getNotes.handler
     events:
       - http:
-          method: get
-          path: notes
-          cors: true
-          authorizer: aws_iam
+        method: get
+        path: notes
+        cors: true
+        authorizer: aws_iam
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
 resources:
   Resources:
