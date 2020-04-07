@@ -103,6 +103,18 @@ functions:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
+  Billing:
+    environment:
+      STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
+    handler: src/billing.handler
+    events:
+      - http:
+          method: post
+          path: billing
+          cors: true
+          authorizer: aws_iam
+    # TODO: Add iam Role for charges table
+
 resources:
   Resources:
     # Notes DynamoDB Table
