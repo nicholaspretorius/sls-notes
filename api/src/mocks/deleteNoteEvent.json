@@ -1,5 +1,4 @@
 {
-    "body": "{\"content\": \"hello world updated 6!\", \"attachment\": \"hello-updated-6.jpg\" }",
     "pathParameters": {
         "noteId": "680c0d30-78b7-11ea-975e-21fa8ae03070"
     },

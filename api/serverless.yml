@@ -88,6 +88,19 @@ functions:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
+  DeleteNote:
+    handler: src/deleteNote.handler
+    events:
+      - http:
+          method: delete
+          cors: true
+          authorizer: aws_iam
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
+
 resources:
   Resources:
     # Notes DynamoDB Table
