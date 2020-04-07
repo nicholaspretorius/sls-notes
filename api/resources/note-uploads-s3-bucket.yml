@@ -1,0 +1,19 @@
+Resources:
+  # Notes attachments/uploads S3 bucket
+  NotesUploadsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:provider.environment.NOTES_UPLOADS_S3_BUCKET}
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000

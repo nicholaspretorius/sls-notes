@@ -116,41 +116,6 @@ functions:
     # TODO: Add iam Role for charges table
 
 resources:
-  Resources:
-    # API Gateway Errors
-    - ${file(resources/api-gateway-errors.yml)}
-    # Notes DynamoDB Table
-    NotesDynamoDBTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: noteId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-          - AttributeName: noteId
-            KeyType: RANGE
-        BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.NOTES_TABLE}
-
-    # Notes attachments/uploads S3 bucket
-    NotesUploadsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:provider.environment.NOTES_UPLOADS_S3_BUCKET}
-        CorsConfiguration:
-          CorsRules:
-            - AllowedOrigins:
-                - "*"
-              AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
-              MaxAge: 3000
+  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(resources/notes-dynamodb-table.yml)}
+  - ${file(resources/note-uploads-s3-bucket.yml)}
