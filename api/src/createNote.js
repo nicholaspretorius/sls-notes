@@ -1,11 +1,10 @@
 import uuid from "uuid";
-import AWS from "aws-sdk";
 
+import * as dynamoDb from "./libs/dynamoDbLib";
+import { success, failure } from "./libs/responseLib";
 import { createLogger } from "./utils/logger";
 
 const logger = createLogger("createNote");
-
-const dbClient = new AWS.DynamoDB.DocumentClient();
 
 const notesTable = process.env.NOTES_TABLE;
 
@@ -23,27 +22,15 @@ export async function handler(event, context) {
     }
   };
 
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Credentials": true
-  };
-
   try {
-    const note = await dbClient.put(params).promise();
-    logger.info("Note: ", { note });
-  } catch (e) {
-    // logger to go here
-    logger.info("Error creating note: ", { error: e });
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify(e)
-    };
-  }
+    await dynamoDb.call("put", params);
 
-  return {
-    statusCode: 201,
-    headers,
-    body: JSON.stringify(params.Item)
-  };
+    logger.info("Note: ", { note: params.Item });
+
+    return success(params.Item);
+  } catch (e) {
+    logger.info("Error creating note: ", { error: e });
+
+    return failure(e);
+  }
 }
