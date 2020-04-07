@@ -29,3 +29,13 @@ API URL: https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev
 * DELETE /notes/{noteId} https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev/notes/{noteId}
 
 `AWS_PROFILE=serverless-user serverless invoke local --function DeleteNote --path src/mocks/deleteNoteEvent.json`
+
+* POST /billing https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev/billing
+
+`AWS_PROFILE=serverless-user serverless invoke local --function Billing --path src/mocks/billingEvent.json`
+
+### Tests
+
+* Test will run once: 
+
+`npm test`
