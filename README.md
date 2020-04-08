@@ -49,3 +49,97 @@ API URL: https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev
 * Deploy a single function: 
 
 `serverless deploy function -f Billing`
+
+### Cognito Auth
+
+In order to authenticate with Cognito without using a frontend client, you can do the following using a tool called [aws-api-gateway-cli-test](https://github.com/AnomalyInnovations/aws-api-gateway-cli-test): 
+
+If installed globally, the command is: `apig-test`
+
+```
+npx aws-api-gateway-cli-test \
+--username='admin@example.com' \
+--password='Passw0rd!' \
+--user-pool-id='YOUR_COGNITO_USER_POOL_ID' \
+--app-client-id='YOUR_COGNITO_APP_CLIENT_ID' \
+--cognito-region='YOUR_COGNITO_REGION' \
+--identity-pool-id='YOUR_IDENTITY_POOL_ID' \
+--invoke-url='YOUR_API_GATEWAY_URL' \
+--api-gateway-region='YOUR_API_GATEWAY_REGION' \
+--path-template='/notes' \
+--method='POST' \
+--body='{"content":"hello world","attachment":"hello.jpg"}'
+```
+
+Populated: 
+
+```
+npx aws-api-gateway-cli-test \
+--username='nicholaspretorius@gmail.com' \
+--password='Passw0rd!' \
+--user-pool-id='eu-west-1_iqrXNOPhZ' \
+--app-client-id='4kmdbsn7s9va7lvslk1ntv48u9' \
+--cognito-region='eu-west-1' \
+--identity-pool-id='eu-west-1:51eb39a2-6a02-47e6-8784-313ba2c7a288' \
+--invoke-url='https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev' \
+--api-gateway-region='eu-west-1' \
+--path-template='/notes' \
+--method='POST' \
+--body='@src/mocks/createNoteEvent.json'
+```
+
+* Can also use --body='@src/mocks/createNoteEvent.json'
+
+Response: 
+
+```
+{
+  status: 201,
+  statusText: 'Created',
+  data: {
+    userId: 'eu-west-1:c3a84c65-0a55-4f51-ae0b-0f1bc707b5dc',
+    noteId: 'b05924d0-7978-11ea-a620-0d36c04be141',
+    createdAt: 1586336984989
+  }
+}
+```
+
+#### Further Examples
+
+* To pass in path parameters with your request.
+
+```
+npx aws-api-gateway-cli-test \
+--username='email@example.com' \
+--password='password' \
+--user-pool-id='abc' \
+--app-client-id='def' \
+--cognito-region='us-east-1' \
+--identity-pool-id='ghi' \
+--invoke-url='https://123.execute-api.us-east-1.amazonaws.com/prod' \
+--api-gateway-region='us-east-1' \
+--path-template='/notes/{id}' \
+--params='{"id":"456"}' \
+--method='GET'
+```
+
+* To pass in query parameters and headers with your request.
+
+```
+npx aws-api-gateway-cli-test \
+--username='email@example.com' \
+--password='password' \
+--user-pool-id='abc' \
+--app-client-id='def' \
+--cognito-region='us-east-1' \
+--identity-pool-id='ghi' \
+--invoke-url='https://123.execute-api.us-east-1.amazonaws.com/prod' \
+--api-gateway-region='us-east-1' \
+--path-template='/notes' \
+--additional-params='{"queryParams":{"param0":"abc"},"headers":{"param1":"123"}}' \
+--method='GET'
+```
+
+### Frontend
+
+The frontend client is contained within the "client" folder in the root. Change into "client" and run: `npm start`
