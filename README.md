@@ -143,3 +143,5 @@ npx aws-api-gateway-cli-test \
 ### Frontend
 
 The frontend client is contained within the "client" folder in the root. Change into "client" and run: `npm start`
+
+Favicons generated from [Real Favicon Generator](https://realfavicongenerator.net/)
