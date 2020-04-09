@@ -104,6 +104,28 @@ Response:
 }
 ```
 
+#### Confirm an unauthenticated user
+
+A quick note on the [signup flow](https://serverless-stack.com/chapters/signup-with-aws-cognito.html) here. If the user refreshes their page at the confirm step, they won’t be able to get back and confirm that account. It forces them to create a new account instead. We are keeping things intentionally simple but here are a couple of hints on how to fix it.
+
+1. Check for the `UsernameExistsException` in the `handleSubmit` function’s catch block.
+2. Use the `Auth.resendSignUp()` method to resend the code if the user has not been previously confirmed. Here is a link to the [Amplify API](https://aws.github.io/aws-amplify/api/classes/authclass.html#resendsignup) docs.
+3. Confirm the code just as we did before.
+
+```
+aws cognito-idp admin-confirm-sign-up \
+   --region YOUR_COGNITO_REGION \
+   --user-pool-id YOUR_COGNITO_USER_POOL_ID \
+   --username YOUR_USER_EMAIL
+```
+
+```
+aws cognito-idp admin-confirm-sign-up \
+   --region eu-west-1 \
+   --user-pool-id eu-west-1_iqrXNOPhZ \
+   --username nicholaspre@icloud.com
+```
+
 #### Further Examples
 
 * To pass in path parameters with your request.
