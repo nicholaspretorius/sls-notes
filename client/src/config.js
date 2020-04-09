@@ -1,5 +1,6 @@
 // AWS Amplify Config
 export default {
+  MAX_ATTACHMENT_SIZE: 5000000,
   s3: {
     REGION: "eu-west-1",
     BUCKET: "sls-notes-uploads-bucket-"
