@@ -47,6 +47,10 @@ export default function Note() {
     });
   }
 
+  function deleteNote() {
+    return API.del("notes", `/notes/${id}`);
+  }
+
   function validateForm() {
     return content.length > 0;
   }
@@ -101,6 +105,16 @@ export default function Note() {
     }
 
     setIsDeleting(true);
+
+    try {
+      await deleteNote();
+      // TODO: delete attachment from S3: https://aws.github.io/aws-amplify/api/classes/storageclass.html#remove
+      setIsDeleting(false);
+      history.push("/");
+    } catch (e) {
+      console.error(e);
+      setIsDeleting(false);
+    }
   }
 
   return (
