@@ -167,3 +167,11 @@ npx aws-api-gateway-cli-test \
 The frontend client is contained within the "client" folder in the root. Change into "client" and run: `npm start`
 
 Favicons generated from [Real Favicon Generator](https://realfavicongenerator.net/)
+
+#### Stripe
+
+Read more about [Stripe here](https://stripe.com/docs/testing#cards):
+
+* A Stripe test card number is 4242 4242 4242 4242.
+* You can use any valid expiry date, security code, and zip code.
+* And set any name.
