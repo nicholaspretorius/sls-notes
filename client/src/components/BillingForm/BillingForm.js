@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import LoaderButton from "./../LoaderButton";
-import { useFormFields } from "./../../lib/hooksLib";
+import { useFormFields } from "./../../libs/hooksLib";
 import "./BillingForm.css";
 
 // https://github.com/stripe/react-stripe-elements
 function BillingForm({ isLoading, onSubmit, ...props }) {
-  const [fields, setFields] = useFormFields({
+  const [fields, handleFieldChange] = useFormFields({
     name: "",
     storage: ""
   });
