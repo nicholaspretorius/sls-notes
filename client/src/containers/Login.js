@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
-import { useFormFields } from "./../lib/hooksLib";
+import { useFormFields } from "../libs/hooksLib";
 
 export default function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
