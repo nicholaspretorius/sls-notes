@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-// import { API } from "aws-amplify";
+import { API } from "aws-amplify";
 import LoaderButton from "./../../components/LoaderButton";
 // import { onError } from "./../../components/onError";
+import { s3Upload } from "./../../libs/awsLib";
 import config from "./../../config";
 import "./NewNote.css";
 
@@ -30,6 +31,23 @@ export default function NewNote() {
     }
 
     setIsLoading(true);
+
+    try {
+      const attachment = file.current ? await s3Upload(file.current) : null;
+
+      await createNote({ content, attachment });
+      history.push("/");
+    } catch (e) {
+      console.error(e);
+      // onError(e)
+      setIsLoading(false);
+    }
+  }
+
+  function createNote(note) {
+    return API.post("notes", "/notes", {
+      body: note
+    });
   }
 
   return (
