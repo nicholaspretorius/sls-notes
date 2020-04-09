@@ -20,6 +20,7 @@ export default function Signup(props) {
   // const { userHasAuthenticated } = useAppContext();
 
   function validateForm() {
+    // console.log("Fields: ", fields);
     return (
       fields.email.length > 0 &&
       fields.password.length > 0 &&
@@ -37,7 +38,7 @@ export default function Signup(props) {
 
     try {
       const newUser = await Auth.signUp({
-        email: fields.email,
+        username: fields.email,
         password: fields.password
       });
       setIsLoading(false);
@@ -54,7 +55,7 @@ export default function Signup(props) {
     setIsLoading(true);
 
     try {
-      await Auth.confirmSignUp(fields.email, fields.password);
+      await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
 
       props.userHasAuthenticated(true);
