@@ -4,6 +4,7 @@ import { API, Storage } from "aws-amplify";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "./../../components/LoaderButton";
 import config from "./../../config";
+import { s3Upload } from "../../libs/awsLib";
 import "./Note.css";
 
 export default function Note() {
@@ -40,6 +41,12 @@ export default function Note() {
     onLoad();
   }, [id]);
 
+  function saveNote(note) {
+    return API.put("notes", `/notes/${id}`, {
+      body: note
+    });
+  }
+
   function validateForm() {
     return content.length > 0;
   }
@@ -63,6 +70,25 @@ export default function Note() {
     }
 
     setIsLoading(true);
+
+    try {
+      if (file.current) {
+        attachment = await s3Upload(file.current);
+      }
+
+      // TODO: Delete existing note from S3: https://aws.github.io/aws-amplify/api/classes/storageclass.html#remove
+
+      await saveNote({
+        content,
+        attachment: attachment || note.attachment
+      });
+
+      setIsLoading(false);
+      history.push("/");
+    } catch (e) {
+      console.error(e);
+      setIsLoading(false);
+    }
   }
 
   async function handleDelete(event) {
