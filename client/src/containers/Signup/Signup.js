@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import "./Signup.css";
-import LoaderButton from "../../components/LoaderButton";
-import { useFormFields } from "../../libs/hooksLib";
+import LoaderButton from "./../../components/LoaderButton";
+import { useFormFields } from "./../../libs/hooksLib";
 // import { useAppContext } from "../../libs/contextLib";
 
 export default function Signup(props) {
