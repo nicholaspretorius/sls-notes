@@ -5,7 +5,7 @@ node_js:
 deploy_service_job: &DEPLOY_SERVICE_JOB
   cache:
     directories:
-      - node_modules
+      - api/node_modules
 
   install:
     - cd api
@@ -15,13 +15,14 @@ deploy_service_job: &DEPLOY_SERVICE_JOB
 
   script:
     - cd api
+    - npm run test
     - serverless deploy -s ${STAGE_NAME}
     - cd -
 
 environments:
-  - &PRODUCTION_ENV
-    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_PRODUCTION}
-    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_PRODUCTION}
+  # - &PRODUCTION_ENV
+  #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_PRODUCTION}
+  #   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_PRODUCTION}
 
   - &DEVELOPMENT_ENV
     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_DEVELOPMENT}
@@ -31,16 +32,14 @@ jobs:
   include:
     # master deploys to 'dev', however, in future, master will deploy to 'prod'
     - <<: *DEPLOY_SERVICE_JOB
-      name: "Deploy API"
-      # type = push AND NOT branch = master
-      if: type = push AND branch = master
+      name: "Deploy Dev API"
+      if: type = push AND NOT branch = master
       env:
         - STAGE_NAME=${TRAVIS_BRANCH}
         - *DEVELOPMENT_ENV
     # TODO: in future master will deploy to 'prod'
     # - <<: *DEPLOY_SERVICE_JOB
     #   name: "Production Deploy API"
-    #   # type = push AND NOT branch = master
     #   if: type = push AND branch = master
     #   env:
     #     - STAGE_NAME=${TRAVIS_BRANCH}

@@ -1,5 +1,7 @@
 # Serverless Notes App
 
+[![Build Status](https://travis-ci.com/nicholaspretorius/sls-notes.svg?branch=dev)](https://travis-ci.com/nicholaspretorius/sls-notes)
+
 Notes app using Node.js, Serverless framework and AWS. According to the series at [Serverless Stack](https://serverless-stack.com/)
 
 ## Developer Notes
@@ -44,7 +46,9 @@ API URL: https://lz2ymosryl.execute-api.eu-west-1.amazonaws.com/dev
 
 * Deploy the entire application: 
 
-`sls deploy -v`
+`sls deploy -v` -v displays out put
+
+`sls deploy -s dev` -s deploys to stage 'dev'
 
 * Deploy a single function: 
 
@@ -175,3 +179,9 @@ Read more about [Stripe here](https://stripe.com/docs/testing#cards):
 * A Stripe test card number is 4242 4242 4242 4242.
 * You can use any valid expiry date, security code, and zip code.
 * And set any name.
+
+### CI/CD
+
+Travis CI is used to deploy the API to AWS on `git push` to master branch. 
+
+See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more info. 
