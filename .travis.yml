@@ -8,11 +8,13 @@ deploy_service_job: &DEPLOY_SERVICE_JOB
       - node_modules
 
   install:
+    - cd api
     - npm install -g serverless
     - travis_retry npm install
     - cd -
 
   script:
+    - cd api
     - serverless deploy -s ${STAGE_NAME}
     - cd -
 
