@@ -22,6 +22,7 @@ function App(props) {
       userHasAuthenticated(true);
     } catch (e) {
       if (e !== "No current user") {
+        console.log("No current user: ", e);
         alert(e);
       }
     }

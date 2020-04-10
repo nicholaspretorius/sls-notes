@@ -31,7 +31,7 @@ export default function Login() {
     } catch (e) {
       console.error(e);
       alert(e.message);
-      setIsLoading(true);
+      setIsLoading(false);
     }
   }
 
