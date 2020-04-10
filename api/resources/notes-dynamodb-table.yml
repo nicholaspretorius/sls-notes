@@ -2,7 +2,10 @@ Resources:
   # Notes DynamoDB Table
   NotesDynamoDBTable:
     Type: AWS::DynamoDB::Table
+    # DeletionPolicy: Retain
+    # https://seed.run/blog/how-to-prevent-accidentally-deleting-serverless-resources
     Properties:
+      TableName: ${self:provider.environment.NOTES_TABLE}
       AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S
@@ -14,4 +17,3 @@ Resources:
         - AttributeName: noteId
           KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
-      TableName: ${self:provider.environment.NOTES_TABLE}

@@ -119,3 +119,5 @@ resources:
   - ${file(resources/api-gateway-errors.yml)}
   - ${file(resources/notes-dynamodb-table.yml)}
   - ${file(resources/note-uploads-s3-bucket.yml)}
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}
