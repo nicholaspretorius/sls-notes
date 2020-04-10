@@ -1,0 +1,45 @@
+language: node_js
+node_js:
+  - "12.7.0"
+
+deploy_service_job: &DEPLOY_SERVICE_JOB
+  cache:
+    directories:
+      - node_modules
+
+  install:
+    - npm install -g serverless
+    - travis_retry npm install
+    - cd -
+
+  script:
+    - serverless deploy -s ${STAGE_NAME}
+    - cd -
+
+environments:
+  - &PRODUCTION_ENV
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_PRODUCTION}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_PRODUCTION}
+
+  - &DEVELOPMENT_ENV
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_DEVELOPMENT}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_DEVELOPMENT}
+
+jobs:
+  include:
+    # master deploys to 'dev', however, in future, master will deploy to 'prod'
+    - <<: *DEPLOY_SERVICE_JOB
+      name: "Deploy API"
+      # type = push AND NOT branch = master
+      if: type = push AND branch = master
+      env:
+        - STAGE_NAME=${TRAVIS_BRANCH}
+        - *DEVELOPMENT_ENV
+    # TODO: in future master will deploy to 'prod'
+    # - <<: *DEPLOY_SERVICE_JOB
+    #   name: "Production Deploy API"
+    #   # type = push AND NOT branch = master
+    #   if: type = push AND branch = master
+    #   env:
+    #     - STAGE_NAME=${TRAVIS_BRANCH}
+    #     - *PRODUCTION_ENV
