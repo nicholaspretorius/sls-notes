@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
+
+import { useAppContext } from "./../../libs/contextLib";
 import "./Home.css";
 
-export default function Home(props) {
+export default function Home() {
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated } = props;
+  const { isAuthenticated } = useAppContext();
 
   useEffect(() => {
     async function onLoad() {

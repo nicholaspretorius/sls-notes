@@ -3,9 +3,10 @@ import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
-import "./App.css";
 
+import { AppContext } from "./libs/contextLib";
 import Routes from "./Routes";
+import "./App.css";
 
 function App(props) {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -66,7 +67,9 @@ function App(props) {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+          <Routes />
+        </AppContext.Provider>
       </div>
     )
   );

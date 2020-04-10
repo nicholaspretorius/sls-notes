@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { API } from "aws-amplify";
 import { Elements, StripeProvider } from "react-stripe-elements";
+
 // import { onError } from "../libs/errorLib";
 import config from "./../../config";
 import BillingForm from "./../../components/BillingForm/BillingForm";

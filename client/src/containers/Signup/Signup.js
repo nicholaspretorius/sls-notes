@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HelpBlock, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
-import "./Signup.css";
+
 import LoaderButton from "./../../components/LoaderButton";
 import { useFormFields } from "./../../libs/hooksLib";
-// import { useAppContext } from "../../libs/contextLib";
+import { useAppContext } from "./../../libs/contextLib";
+import "./Signup.css";
 
-export default function Signup(props) {
+export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -17,7 +18,7 @@ export default function Signup(props) {
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
-  // const { userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated } = useAppContext();
 
   function validateForm() {
     // console.log("Fields: ", fields);
@@ -58,7 +59,7 @@ export default function Signup(props) {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
 
-      props.userHasAuthenticated(true);
+      userHasAuthenticated(true);
       history.push("/");
     } catch (e) {
       console.log("Signup Confirmation Error: ", e);

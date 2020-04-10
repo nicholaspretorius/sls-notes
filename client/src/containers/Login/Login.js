@@ -4,8 +4,10 @@ import { Auth } from "aws-amplify";
 import "./Login.css";
 import LoaderButton from "./../../components/LoaderButton";
 import { useFormFields } from "./../../libs/hooksLib";
+import { useAppContext } from "./../../libs/contextLib";
 
-export default function Login(props) {
+export default function Login() {
+  const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -22,9 +24,9 @@ export default function Login(props) {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      props.userHasAuthenticated(true);
+      userHasAuthenticated(true);
       console.log("Logged in: ", fields.email, fields.password);
-      props.history.push("/");
+      // props.history.push("/");
     } catch (e) {
       console.error(e);
       alert(e.message);

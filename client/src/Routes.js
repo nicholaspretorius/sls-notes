@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import AppliedRoute from "./components/AppliedRoute";
+
 import Home from "./containers/Home/Home";
 import NotFound from "./containers/NotFound/NotFound";
 import Login from "./containers/Login/Login";
@@ -8,22 +8,33 @@ import Signup from "./containers/Signup/Signup";
 import NewNote from "./containers/NewNote/NewNote";
 import Note from "./containers/Note/Note";
 import Settings from "./containers/Settings/Settings";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
-export default function Routes({ appProps }) {
+export default function Routes() {
   return (
     <Switch>
-      <AppliedRoute path="/" exact component={Home} appProps={appProps} />
-      <AppliedRoute path="/login" exact component={Login} appProps={appProps} />
-      <AppliedRoute path="/signup" exact component={Signup} appProps={appProps} />
-      <AppliedRoute path="/signup" exact component={Signup} appProps={appProps} />
-      <AppliedRoute path="/notes/new" exact component={NewNote} appProps={appProps} />
-      <Route exact path="/notes/:id">
-        <Note />
+      <Route exact path="/">
+        <Home />
       </Route>
-      <Route exact path="/settings">
+      <UnauthenticatedRoute exact path="/login">
+        <Login />
+      </UnauthenticatedRoute>
+      <UnauthenticatedRoute exact path="/signup">
+        <Signup />
+      </UnauthenticatedRoute>
+      <AuthenticatedRoute exact path="/settings">
         <Settings />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/notes/new">
+        <NewNote />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/notes/:id">
+        <Note />
+      </AuthenticatedRoute>
+      <Route>
+        <NotFound />
       </Route>
-      <Route component={NotFound} />
     </Switch>
   );
 }
