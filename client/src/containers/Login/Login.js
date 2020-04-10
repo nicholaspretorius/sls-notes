@@ -6,6 +6,8 @@ import LoaderButton from "./../../components/LoaderButton";
 import { useFormFields } from "./../../libs/hooksLib";
 import { useAppContext } from "./../../libs/contextLib";
 
+// TODO: Add another login - https://serverless-stack.com/chapters/facebook-login-with-cognito-using-aws-amplify.html
+
 export default function Login() {
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +28,6 @@ export default function Login() {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
       console.log("Logged in: ", fields.email, fields.password);
-      // props.history.push("/");
     } catch (e) {
       console.error(e);
       alert(e.message);
