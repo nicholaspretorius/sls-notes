@@ -184,4 +184,4 @@ Read more about [Stripe here](https://stripe.com/docs/testing#cards):
 
 Travis CI is used to deploy the API to AWS on `git push` to master branch. 
 
-See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more info. 
+See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more [info](https://serverless-stack.com/chapters/automating-serverless-deployments.html). 
