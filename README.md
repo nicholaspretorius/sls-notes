@@ -172,6 +172,10 @@ The frontend client is contained within the "client" folder in the root. Change 
 
 Favicons generated from [Real Favicon Generator](https://realfavicongenerator.net/)
 
+* Build the frontend for 'prod': 
+
+`REACT_APP_STAGE=prod npm run build` (`REACT_APP_STAGE=dev npm run build`)
+
 #### Stripe
 
 Read more about [Stripe here](https://stripe.com/docs/testing#cards):
@@ -184,4 +188,4 @@ Read more about [Stripe here](https://stripe.com/docs/testing#cards):
 
 Travis CI is used to deploy the API to AWS on `git push` to master branch. 
 
-See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more info. 
+See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more [info](https://serverless-stack.com/chapters/automating-serverless-deployments.html). 

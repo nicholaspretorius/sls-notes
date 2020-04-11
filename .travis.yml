@@ -10,15 +10,22 @@ deploy_service_job: &DEPLOY_SERVICE_JOB
   install:
     - cd api
     - npm install -g serverless
+    # - pip install --user awscli
+    # - npm install -g aws
     - travis_retry npm install
     - cd -
+    # - cd ..
+    # - cd client
 
   script:
     - cd api
     - npm run test
     - serverless deploy -s ${STAGE_NAME}
     - cd -
-
+    # - cd ..
+    # - cd client
+    # - REACT_APP_STAGE=${STAGE_NAME} npm run build
+    # - aws s3 sync build/ s3://YOUR_S3_DEPLOY_BUCKET_NAME
 environments:
   # - &PRODUCTION_ENV
   #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_PRODUCTION}
