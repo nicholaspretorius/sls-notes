@@ -1,5 +1,4 @@
-export default {
-  MAX_ATTACHMENT_SIZE: 5000000,
+const dev = {
   STRIPE_KEY: "pk_test_BV8mIlA2bgaja47OFh0nb5eN007eCzJEbN",
   s3: {
     REGION: "eu-west-1",
@@ -15,4 +14,15 @@ export default {
     APP_CLIENT_ID: "3qu4uneoimio7155vf2mqjvf43", // "4kmdbsn7s9va7lvslk1ntv48u9",
     IDENTITY_POOL_ID: "eu-west-1:f9b775c2-88ee-4349-aab1-635cb5864230" // "eu-west-1:51eb39a2-6a02-47e6-8784-313ba2c7a288"
   }
+};
+
+const prod = {
+  // TODO
+};
+
+const config = process.env.REACT_APP_STAGE === "prod" ? prod : dev;
+
+export default {
+  MAX_ATTACHMENT_SIZE: 5000000,
+  ...config
 };
