@@ -12,6 +12,8 @@ function App(props) {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
+  console.log("STAGE: ", process.env.REACT_APP_STAGE);
+
   useEffect(() => {
     onLoad();
   }, []);
