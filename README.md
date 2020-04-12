@@ -189,3 +189,7 @@ Read more about [Stripe here](https://stripe.com/docs/testing#cards):
 Travis CI is used to deploy the API to AWS on `git push` to master branch. 
 
 See [here](https://seed.run/blog/how-to-build-a-cicd-pipeline-for-serverless-apps-with-travis-ci) for more [info](https://serverless-stack.com/chapters/automating-serverless-deployments.html). 
+
+Netlify is used to host and deploy the client app. The client app repo can be found [here](https://github.com/nicholaspretorius/sls-notes-client)
+
+The client app is found on Netlify [here](https://amazing-goldwasser-b48fe9.netlify.com/)
