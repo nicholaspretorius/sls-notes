@@ -1,4 +1,7 @@
 import * as debug from "./debugLib";
+import { createLogger } from "./../utils/logger";
+
+const logger = createLogger("handlerLib");
 
 export default function handler(lambda) {
   return function(event, context) {
@@ -13,7 +16,7 @@ export default function handler(lambda) {
         // On failure
         .catch(e => {
           // Print debug messages
-          console.log("Error: ", e);
+          logger.error("Error retrieving note: ", { error: e, name: e.name, message: e.message });
           debug.flush(e);
           return [e.name, { error: e.message }];
         })
