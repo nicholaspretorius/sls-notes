@@ -16,9 +16,9 @@ export default function handler(lambda) {
         // On failure
         .catch(e => {
           // Print debug messages
-          logger.error("Error retrieving note: ", { error: e, name: e.name, message: e.message });
+          logger.error("Error retrieving note: ", { error: e });
           debug.flush(e);
-          return [e.name, { error: e.message }];
+          return [500, { error: e.message }];
         })
         // Return HTTP response
         .then(([statusCode, body]) => ({
