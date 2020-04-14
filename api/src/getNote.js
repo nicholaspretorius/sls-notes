@@ -1,7 +1,7 @@
 import handler from "./libs/handlerLib";
 import * as dynamoDb from "./libs/dynamoDbLib";
 // import { success, failure } from "./libs/responseLib";
-import { createLogger } from "./utils/logger";
+// import { createLogger } from "./utils/logger";
 
 // const logger = createLogger("getNote");
 
