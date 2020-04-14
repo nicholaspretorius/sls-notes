@@ -20,12 +20,15 @@ export const main = handler(async (event, context) => {
   const res = await dynamoDb.call("get", params);
 
   if (!res.Item) {
-    throw new Error("Item not found");
+    throw new Error({
+      message: "Item not found",
+      statusCode: 404
+    });
   }
 
   return {
     body: res.Item,
-    code: 201
+    code: 200
   };
 });
 
