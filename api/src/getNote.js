@@ -25,7 +25,7 @@ export const main = handler(async (event, context) => {
 
   return {
     body: res.Item,
-    code: 200
+    code: 201
   };
 });
 
