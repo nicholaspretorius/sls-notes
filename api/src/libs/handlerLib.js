@@ -13,8 +13,9 @@ export default function handler(lambda) {
         // On failure
         .catch(e => {
           // Print debug messages
+          console.log("Error: ", e);
           debug.flush(e);
-          return [e.statusCode, { error: e.message }];
+          return [e.name, { error: e.message }];
         })
         // Return HTTP response
         .then(([statusCode, body]) => ({
