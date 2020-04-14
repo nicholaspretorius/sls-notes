@@ -1,4 +1,4 @@
-import * as debug from "./debug-lib";
+import * as debug from "./debugLib";
 
 export default function handler(lambda) {
   return function(event, context) {
