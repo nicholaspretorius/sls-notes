@@ -9,7 +9,7 @@ export default function handler(lambda) {
         // Run the Lambda
         .then(() => lambda(event, context))
         // On success
-        .then(responseBody => [200, responseBody])
+        .then(responseBody => [responseBody.code, responseBody.body])
         // On failure
         .catch(e => {
           // Print debug messages
