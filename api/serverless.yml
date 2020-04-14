@@ -48,7 +48,7 @@ functions:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
   GetNote:
-    handler: src/getNote.handler
+    handler: src/getNote.main
     events:
       - http:
           method: get

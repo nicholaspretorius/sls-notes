@@ -1,12 +1,14 @@
+import handler from "./libs/handlerLib";
 import * as dynamoDb from "./libs/dynamoDbLib";
-import { success, failure } from "./libs/responseLib";
-import { createLogger } from "./utils/logger";
+// import { success, failure } from "./libs/responseLib";
+// import { createLogger } from "./utils/logger";
 
-const logger = createLogger("getNote");
+// const logger = createLogger("getNote");
 
 const notesTable = process.env.NOTES_TABLE;
 
-export async function handler(event) {
+// export async function handler(event) {
+export const main = handler(async (event, context) => {
   const params = {
     TableName: notesTable,
     Key: {
@@ -15,16 +17,28 @@ export async function handler(event) {
     }
   };
 
-  try {
-    const res = await dynamoDb.call("get", params);
+  const res = await dynamoDb.call("get", params);
 
-    if (res.Item) {
-      return success(200, res.Item);
-    } else {
-      return failure(404, { message: "Note not found." });
-    }
-  } catch (e) {
-    logger.error("Error retrieving note: ", { error: e });
-    return failure(500, e);
+  if (!res.Item) {
+    throw new Error("Item not found");
   }
-}
+
+  return {
+    body: res.Item,
+    code: 201
+  };
+});
+
+// try {
+//   const res = await dynamoDb.call("get", params);
+
+//   if (res.Item) {
+//     return success(200, res.Item);
+//   } else {
+//     return failure(404, { message: "Note not found." });
+//   }
+// } catch (e) {
+//   logger.error("Error retrieving note: ", { error: e });
+//   return failure(500, e);
+// }
+// }
