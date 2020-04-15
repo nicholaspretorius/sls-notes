@@ -2,6 +2,7 @@ import handler from "./libs/handlerLib";
 import * as dynamoDb from "./libs/dynamoDbLib";
 // import { success, failure } from "./libs/responseLib";
 import { createLogger } from "./utils/logger";
+import ApiError from "./libs/errors/ApiError";
 
 const logger = createLogger("getNotes");
 
@@ -22,12 +23,12 @@ export const main = handler(async (event, context) => {
   logger.info("Notes: ", res.Items);
 
   if (!res.Items) {
-    throw new Error("No items found");
+    throw new ApiError("No items found", 404);
   }
 
   return {
     body: res.Items,
-    code: 200
+    statusCode: 200
   };
   //   return success(200, res.Items);
   // } catch (e) {
