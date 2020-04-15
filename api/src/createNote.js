@@ -24,10 +24,10 @@ export const main = handler(async (event, context) => {
   };
 
   const res = await dynamoDb.call("put", params);
-  logger.info("Res: ", res);
+  logger.info("Res: ", { result: res });
 
   return {
-    body: res.Item,
+    body: params.Item,
     code: 201
   };
   // try {

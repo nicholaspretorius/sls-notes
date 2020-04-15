@@ -106,7 +106,7 @@ functions:
   Billing:
     environment:
       STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
-    handler: src/billing.handler
+    handler: src/billing.main
     events:
       - http:
           method: post
