@@ -12,7 +12,7 @@ export default function handler(lambda) {
         // Run the Lambda
         .then(() => lambda(event, context))
         // On success
-        .then(responseBody => [responseBody.code, responseBody.body])
+        .then(responseBody => [responseBody.statusCode, responseBody.body])
         // On failure
         .catch(e => {
           // Print debug messages
@@ -22,7 +22,7 @@ export default function handler(lambda) {
           if (e.name === "ApiError") {
             statusCode = e.statusCode;
           }
-          return [statusCode, { error: e.message }];
+          return [statusCode, { error: e.message, errorType: e.name }];
         })
         // Return HTTP response
         .then(([statusCode, body]) => ({

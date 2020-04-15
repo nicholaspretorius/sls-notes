@@ -39,7 +39,7 @@ export const main = handler(async (event, context) => {
       result,
       billingDetails
     },
-    code: 200
+    statusCode: 200
   };
 
   // return success(200, { success: true, billing: billingDetails });

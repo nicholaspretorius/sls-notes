@@ -28,7 +28,7 @@ export const main = handler(async (event, context) => {
 
   return {
     body: params.Item,
-    code: 201
+    statusCode: 201
   };
   // try {
   //   await dynamoDb.call("put", params);

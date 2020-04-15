@@ -36,7 +36,7 @@ export const main = handler(async (event, context) => {
 
   return {
     body: results.Attributes,
-    code: 200
+    statusCode: 200
   };
   //   return success(200, results.Attributes);
   // } catch (e) {

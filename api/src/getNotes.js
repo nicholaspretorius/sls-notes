@@ -28,7 +28,7 @@ export const main = handler(async (event, context) => {
 
   return {
     body: res.Items,
-    code: 200
+    statusCode: 200
   };
   //   return success(200, res.Items);
   // } catch (e) {

@@ -25,7 +25,7 @@ export const main = handler(async (event, context) => {
       noteId,
       results
     },
-    code: 200
+    statusCode: 200
   };
   // try {
   //   const results = await dynamoDb.call("delete", params);
