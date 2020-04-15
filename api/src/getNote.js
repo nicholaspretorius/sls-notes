@@ -1,9 +1,10 @@
 import handler from "./libs/handlerLib";
 import * as dynamoDb from "./libs/dynamoDbLib";
+import ApiError from "./libs/errors/ApiError";
 // import { success, failure } from "./libs/responseLib";
-// import { createLogger } from "./utils/logger";
+import { createLogger } from "./utils/logger";
 
-// const logger = createLogger("getNote");
+const logger = createLogger("getNote");
 
 const notesTable = process.env.NOTES_TABLE;
 
@@ -18,10 +19,11 @@ export const main = handler(async (event, context) => {
   };
 
   const res = await dynamoDb.call("get", params);
+  logger.info("Results: ", { results: res });
 
   if (!res.Item) {
     // TODO: Create custom error class extending error to pass statusCode to handlerLib
-    throw new Error("Item not found");
+    throw new ApiError("Item not found", 404);
   }
 
   return {
