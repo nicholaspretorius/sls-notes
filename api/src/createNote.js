@@ -2,7 +2,7 @@ import handler from "./libs/handlerLib";
 import uuid from "uuid";
 
 import * as dynamoDb from "./libs/dynamoDbLib";
-import { success, failure } from "./libs/responseLib";
+// import { success, failure } from "./libs/responseLib";
 import { createLogger } from "./utils/logger";
 
 const logger = createLogger("createNote");
@@ -24,6 +24,7 @@ export const main = handler(async (event, context) => {
   };
 
   const res = await dynamoDb.call("put", params);
+  logger.info("Res: ", res);
 
   return {
     body: res.Item,
