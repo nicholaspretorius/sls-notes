@@ -62,7 +62,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   GetNotes:
-    handler: src/getNotes.handler
+    handler: src/getNotes.main
     events:
       - http:
           method: get
@@ -76,7 +76,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   UpdateNote:
-    handler: src/updateNote.handler
+    handler: src/updateNote.main
     events:
       - http:
           method: put

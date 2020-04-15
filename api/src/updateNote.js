@@ -1,12 +1,13 @@
+import handler from "./libs/handlerLib";
 import * as dynamoDb from "./libs/dynamoDbLib";
-import { success, failure } from "./libs/responseLib";
+// import { success, failure } from "./libs/responseLib";
 import { createLogger } from "./utils/logger";
 
 const logger = createLogger("createNote");
 
 const notesTable = process.env.NOTES_TABLE;
 
-export async function handler(event, context) {
+export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
   const userId = event.requestContext.identity.cognitoIdentityId;
   const noteId = event.pathParameters.noteId;
@@ -25,12 +26,21 @@ export async function handler(event, context) {
     ReturnValues: "ALL_NEW"
   };
 
-  try {
-    const results = await dynamoDb.call("update", params);
-    logger.info("Note updated: ", { results });
-    return success(200, results.Attributes);
-  } catch (e) {
-    logger.error("Error updating note: ", { error: e });
-    return failure(500, { error: e });
+  //try {
+  const results = await dynamoDb.call("update", params);
+  logger.info("Note updated: ", { results });
+
+  if (!results.Attributes) {
+    throw new Error("Error updating note");
   }
-}
+
+  return {
+    body: results.Attributes,
+    code: 200
+  };
+  //   return success(200, results.Attributes);
+  // } catch (e) {
+  //   logger.error("Error updating note: ", { error: e });
+  //   return failure(500, { error: e });
+  // }
+});
