@@ -35,7 +35,7 @@ provider:
 
 functions:
   CreateNote:
-    handler: src/createNote.handler
+    handler: src/createNote.main
     events:
       - http:
           method: post
@@ -62,7 +62,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   GetNotes:
-    handler: src/getNotes.handler
+    handler: src/getNotes.main
     events:
       - http:
           method: get
@@ -76,7 +76,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   UpdateNote:
-    handler: src/updateNote.handler
+    handler: src/updateNote.main
     events:
       - http:
           method: put
@@ -90,7 +90,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   DeleteNote:
-    handler: src/deleteNote.handler
+    handler: src/deleteNote.main
     events:
       - http:
           method: delete
@@ -106,7 +106,7 @@ functions:
   Billing:
     environment:
       STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
-    handler: src/billing.handler
+    handler: src/billing.main
     events:
       - http:
           method: post

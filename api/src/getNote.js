@@ -20,12 +20,13 @@ export const main = handler(async (event, context) => {
   const res = await dynamoDb.call("get", params);
 
   if (!res.Item) {
+    // TODO: Create custom error class extending error to pass statusCode to handlerLib
     throw new Error("Item not found");
   }
 
   return {
     body: res.Item,
-    code: 201
+    code: 200
   };
 });
 

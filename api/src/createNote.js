@@ -1,14 +1,15 @@
+import handler from "./libs/handlerLib";
 import uuid from "uuid";
 
 import * as dynamoDb from "./libs/dynamoDbLib";
-import { success, failure } from "./libs/responseLib";
+// import { success, failure } from "./libs/responseLib";
 import { createLogger } from "./utils/logger";
 
 const logger = createLogger("createNote");
 
 const notesTable = process.env.NOTES_TABLE;
 
-export async function handler(event, context) {
+export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
 
   const params = {
@@ -22,15 +23,22 @@ export async function handler(event, context) {
     }
   };
 
-  try {
-    await dynamoDb.call("put", params);
+  const res = await dynamoDb.call("put", params);
+  logger.info("Res: ", { result: res });
 
-    logger.info("Note: ", { note: params.Item });
+  return {
+    body: params.Item,
+    code: 201
+  };
+  // try {
+  //   await dynamoDb.call("put", params);
 
-    return success(201, params.Item);
-  } catch (e) {
-    logger.info("Error creating note: ", { error: e });
+  //   logger.info("Note: ", { note: params.Item });
 
-    return failure(500, e);
-  }
-}
+  //   return success(201, params.Item);
+  // } catch (e) {
+  //   logger.info("Error creating note: ", { error: e });
+
+  //   return failure(500, e);
+  // }
+});
