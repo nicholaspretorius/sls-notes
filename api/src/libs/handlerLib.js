@@ -18,7 +18,11 @@ export default function handler(lambda) {
           // Print debug messages
           logger.error("Error retrieving note: ", { error: e });
           debug.flush(e);
-          return [500, { error: e.message }];
+          let statusCode = 500;
+          if (e.name === "ApiError") {
+            statusCode = e.statusCode;
+          }
+          return [statusCode, { error: e.message }];
         })
         // Return HTTP response
         .then(([statusCode, body]) => ({
