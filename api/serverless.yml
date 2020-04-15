@@ -90,7 +90,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}
 
   DeleteNote:
-    handler: src/deleteNote.handler
+    handler: src/deleteNote.main
     events:
       - http:
           method: delete
